@@ -1,0 +1,39 @@
+
+name: Build CubeWalk APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - master
+
+permissions:
+  contents: read
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v4
+
+      - name: Build Android APK
+        id: build
+        uses: mlm-games/godot-build-action@v1
+        with:
+          EXPORT_PRESET_NAME: "Android arm64"
+          GODOT_VER: "4.3-stable"
+          DEBUG_MODE: "true"
+          EXPORT_DIR: builds
+          IMPORT_TIMEOUT: "60"
+          VERBOSE_IMPORT: "true"
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: CubeWalk-Android-APK
+          path: ${{ steps.build.outputs.build }}/
+          if-no-files-found: error
+          retention-days: 7
