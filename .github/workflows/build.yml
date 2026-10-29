@@ -27,8 +27,6 @@ jobs:
           GODOT_VER: "4.3-stable"
           DEBUG_MODE: "true"
           EXPORT_DIR: builds
-          IMPORT_TIMEOUT: "60"
-          VERBOSE_IMPORT: "true"
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
