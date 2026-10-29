@@ -1,0 +1,75 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Game.gd" id="1_game"]
+[ext_resource type="Script" path="res://Scripts/Joystick.gd" id="2_joy"]
+
+[sub_resource type="BoxMesh" id="Ground_mesh"]
+size = Vector3(80, 0.2, 80)
+
+[sub_resource type="BoxShape3D" id="Ground_shape"]
+size = Vector3(80, 0.2, 80)
+
+[sub_resource type="BoxMesh" id="Player_mesh"]
+size = Vector3(0.8, 0.8, 0.8)
+
+[sub_resource type="BoxShape3D" id="Player_shape"]
+size = Vector3(0.8, 0.8, 0.8)
+
+[sub_resource type="Environment" id="Environment_main"]
+background_mode = 1
+background_color = Color(0.52, 0.72, 0.88, 1)
+ambient_light_source = 3
+ambient_light_color = Color(0.8, 0.85, 0.95, 1)
+ambient_light_energy = 0.7
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_game")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_main")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+rotation = Vector3(-0.8, -0.6, 0)
+light_energy = 1.2
+shadow_enabled = true
+
+[node name="Ground" type="StaticBody3D" parent="."]
+
+[node name="GroundMesh" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("Ground_mesh")
+
+[node name="GroundCollision" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("Ground_shape")
+
+[node name="Player" type="CharacterBody3D" parent="."]
+position = Vector3(0, 0.5, 0)
+
+[node name="CubeMesh" type="MeshInstance3D" parent="Player"]
+mesh = SubResource("Player_mesh")
+
+[node name="PlayerCollision" type="CollisionShape3D" parent="Player"]
+shape = SubResource("Player_shape")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+position = Vector3(0, 7, 10)
+rotation = Vector3(-0.55, 0, 0)
+current = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Joystick" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 28.0
+offset_top = 330.0
+offset_right = 228.0
+offset_bottom = 530.0
+script = ExtResource("2_joy")
+
+[node name="Hint" type="Label" parent="CanvasLayer"]
+offset_left = 24.0
+offset_top = 18.0
+offset_right = 400.0
+offset_bottom = 55.0
+theme_override_font_sizes/font_size = 22
+text = "CUBE WALK  •  Touch joystick to move"
