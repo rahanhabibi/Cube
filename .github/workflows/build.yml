@@ -19,6 +19,12 @@ jobs:
       - name: Checkout project
         uses: actions/checkout@v4
 
+        
+      - name: Reset Godot editor settings
+        run: |
+          mkdir -p ~/.config/godot
+          rm -f ~/.config/godot/editor_settings-4.3.tres
+
       - name: Build Android APK
         id: build
         uses: mlm-games/godot-build-action@v1.3.1
